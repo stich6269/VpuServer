@@ -1,0 +1,13 @@
+{
+  "name": "myvputestapp",
+  "version": "0.0.1",
+  "dependencies": {
+    "crawler": "*",
+    "deferred": "*",
+    "html-entities": "*",
+    "moment": "*",
+    "mongodb": "*",
+    "mongoose": "*",
+    "underscore": "*"
+  }
+}
