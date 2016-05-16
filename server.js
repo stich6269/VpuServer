@@ -10,13 +10,13 @@ var dbName = 'VPU7Schedule',
     dbLink = 'mongodb://localhost/' + dbName,
     header = 'application/json; charset=utf-8';
 
-if(mongoose.connection.readyState == 1){
+/*if(mongoose.connection.readyState == 1){
     startServer();
 }else{
     mongoose.connect(dbLink);
     mongoose.connection.once('open', startServer);
-}
-
+}*/
+startServer();
 function startServer() {
     http.createServer(function(req, res){
         var parsedUrl = url.parse(req.url, true),
@@ -26,7 +26,10 @@ function startServer() {
         data.method = req.method;
         res.setHeader('Content-Type', header);
 
-        switch (link){
+        res.statusCode = 200;
+        res.end('Hello world.');
+
+        /*switch (link){
             case '/get_groups':
                 models.Group.find({}, function (err, result) {
                     res.statusCode = 200;
@@ -54,7 +57,7 @@ function startServer() {
             default:
                 res.statusCode = 404;
                 res.end('Service not found.');
-        }
+        }*/
     }).listen(process.env.PORT || 3000);
 }
 
