@@ -24,10 +24,7 @@ function startServer() {
 
         data.method = req.method;
         res.setHeader('Content-Type', header);
-
-        res.statusCode = 200;
-        res.end('Hello world.');
-
+        
         switch (link){
             case '/get_groups':
                 models.Group.find({}, function (err, result) {
