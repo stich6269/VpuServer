@@ -15,7 +15,7 @@ if(mongoose.connection.readyState == 1){
     mongoose.connect(dbLink);
     mongoose.connection.once('open', startServer);
 }
-startServer();
+
 function startServer() {
     http.createServer(function(req, res){
         var parsedUrl = url.parse(req.url, true),
