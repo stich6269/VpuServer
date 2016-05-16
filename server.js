@@ -6,16 +6,15 @@ var async = require("async");
 var url = require('url');
 
 //Setup and local variables
-var dbName = 'VPU7Schedule',
-    dbLink = 'mongodb://localhost/' + dbName,
+var dbLink = process.env.MONGODB_URI,
     header = 'application/json; charset=utf-8';
 
-/*if(mongoose.connection.readyState == 1){
+if(mongoose.connection.readyState == 1){
     startServer();
 }else{
     mongoose.connect(dbLink);
     mongoose.connection.once('open', startServer);
-}*/
+}
 startServer();
 function startServer() {
     http.createServer(function(req, res){
@@ -29,7 +28,7 @@ function startServer() {
         res.statusCode = 200;
         res.end('Hello world.');
 
-        /*switch (link){
+        switch (link){
             case '/get_groups':
                 models.Group.find({}, function (err, result) {
                     res.statusCode = 200;
@@ -57,7 +56,7 @@ function startServer() {
             default:
                 res.statusCode = 404;
                 res.end('Service not found.');
-        }*/
+        }
     }).listen(process.env.PORT || 3000);
 }
 
