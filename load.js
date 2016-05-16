@@ -8,9 +8,7 @@ var models = require('./models/models');
 
 
 //Setup and local variables
-var dbName = 'VPU7Schedule',
-    dbLink = 'mongodb://localhost/' + dbName,
-    collections = [],
+var dbLink = process.env.MONGODB_URI,
     debug = true;
 
 //Auto run function
