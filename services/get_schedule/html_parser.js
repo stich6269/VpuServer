@@ -11,6 +11,7 @@ function  Parser() {
     this.linkPref = 'http://www.model.poltava.ua';
     this.groupNameMaxLen = 6;
     this.teacherNamePart = 3;
+    this.dateConst = Date.now();
 
     this.ringSchedle = {
         0: {start: '8-00', end: '8-40'},
@@ -29,27 +30,25 @@ Parser.prototype.parseLinks = function($){
     var results = [],
         self = this,
         link = '',
-        course = null,
+        modelType = '',
+        searchName = '',
         currentStr;
 
     if($){
         $('.sub').each(function(i, item){
             currentStr = entities.decode($(item).html());
             link = self.linkPref + $(item).attr('href');
+            searchName = currentStr.replace(/ /g,'').toLocaleLowerCase();
+            modelType = null;
+   
+            if(self.isGroup(currentStr)) modelType = 'Group';
+            if(self.isTeacher(currentStr)) modelType = 'Teacher';
             
-            if(self.isGroup(currentStr)){
-                course = parseInt(currentStr.split('-')[1].slice(0,1));
-                results.push(new models.Group({
+            if(modelType){
+                results.push(new models[modelType]({
                     name: currentStr,
                     link: link,
-                    course: course
-                }));
-            }
-
-            if(self.isTeacher(currentStr)){
-                results.push(new models.Teacher({
-                    name: currentStr,
-                    link: link
+                    searchName: transliterate(searchName)
                 }));
             }
         });
@@ -100,7 +99,8 @@ Parser.prototype.parseLessons = function($, groupName){
                         time: self.ringSchedle[rowCounter - 2],
                         groupName: groupName,
                         date: dayArr[Math.floor(i/2)],
-                        dayId: Math.floor(i/2)
+                        dayId: Math.floor(i/2),
+                        created: self.dateConst
                     };
 
                 _.extend(lesson, lessonsAttrs);
@@ -145,6 +145,22 @@ Parser.prototype.parseLessonsAttr = function(lessonsStr){
     }
 
 };
+
+
+var a = {"Ё":"YO","Й":"I","Ц":"TS","У":"U","К":"K","Е":"E","Н":"N","Г":"G","Ш":"SH","Щ":"SCH","З":"Z",
+    "Х":"H","Ъ":"'","ё":"yo","й":"i","ц":"ts","у":"u","к":"k","е":"e","н":"n","г":"g","ш":"sh","щ":"sch",
+    "з":"z","х":"h","ъ":"'","Ф":"F","Ы":"I","В":"V","А":"a","П":"P","Р":"R","О":"O","Л":"L","Д":"D",
+    "Ж":"ZH","Э":"E","ф":"f","ы":"i","в":"v","а":"a","п":"p","р":"r","о":"o","л":"l","д":"d","ж":"zh",
+    "э":"e","Я":"Ya","Ч":"CH","С":"S","М":"M","И":"I","Т":"T","Ь":"'","Б":"B","Ю":"YU","я":"ya","ч":"ch",
+    "с":"s","м":"m","и":"i","т":"t","ь":"'","б":"b","ю":"yu", 'і':'i', 'І':'I'};
+
+function transliterate(word){
+    return word.split('').map(function (char) {
+        return a[char] || char;
+    }).join("");
+}
+
+
 
 //Exports
 module.exports = new Parser();

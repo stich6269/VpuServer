@@ -8,7 +8,7 @@ var models = require('./models/models');
 
 
 //Setup and local variables
-var dbLink = process.env.MONGODB_URI,
+var dbLink = process.env.MONGODB_URI || "mongodb://localhost/vpuSchedule",
     debug = true;
 
 //Auto run function
@@ -31,28 +31,15 @@ var dbLink = process.env.MONGODB_URI,
     //When connected to db
     mongoose.connection.once('connected', function () {
         debug && console.log('DB connected...');
-        pageGrabber.getScheduleLinks();
-    });
-    
-    //Get new lists
-    pageGrabber.once('got-links', function (result) {
-        debug && console.log('Links parsed...');
-        dropCollections(['teachers', 'groups'], function () {
-            debug && console.log('teachers and groups dropped...');
-            saveCollection(result, getLessons);
-        });
-    });
-    
-    //Get Lessons
-    function getLessons() {
         models.Group.find({}, function (err, result) {
+            debug && console.log('Start update schedule...');
             pageGrabber.getLessons(result);
         });
-    }
+    });
     
     //Get new lists
     pageGrabber.once('got-lessons', function (result) {
-        debug && console.log('Lessons parsed...');
+        debug && console.log('Start lessons parsing...');
         dropCollections(['lessons'], function () {
             debug && console.log('lessons dropped...');
             setPointers(result, function (lessons) {

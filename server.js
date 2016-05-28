@@ -6,7 +6,7 @@ var async = require("async");
 var url = require('url');
 
 //Setup and local variables
-var dbLink = process.env.MONGODB_URI,
+var dbLink = process.env.MONGODB_URI || "mongodb://localhost/vpuSchedule",
     header = 'application/json; charset=utf-8';
 
 if(mongoose.connection.readyState == 1){
@@ -26,20 +26,23 @@ function startServer() {
         res.setHeader('Content-Type', header);
         
         switch (link){
-            case '/get_groups':
-                models.Group.find({}, function (err, result) {
-                    res.statusCode = 200;
-                    res.end(JSON.stringify(result));
-                });
-                break;
-            case '/get_teachers':
-                models.Teacher.find({}, function (err, result) {
-                    res.statusCode = 200;
-                    res.end(JSON.stringify(result));
+            case '/get_list':
+                var list = [];
+                models.Group.find({}, function (err, groups) {
+                    if(err) return sendError('DB error: Group table error');
+                    list = groups;
+
+                    models.Teacher.find({}, function (err, teachers) {
+                        if(err) return sendError('DB error: Teacher table error');
+
+                        res.statusCode = 200;
+                        res.end(JSON.stringify(list.concat(teachers)));
+                    });
                 });
                 break;
             case '/get_schedule':
                 models.Teacher.findById(data.id, function (err, result) {
+                    if(err) return sendError('DB error: User find Error ');
                     var key = result ? 'teacherId' : 'groupId',
                         query = {};
 
@@ -52,12 +55,17 @@ function startServer() {
                 break;
             default:
                 res.statusCode = 404;
-                res.end('Service not found.');
+                res.end('Service not defined.');
         }
+
+
+        function sendError (text) {
+            res.statusCode = 500;
+            res.end(text || 'Server Error')
+        }
+
     }).listen(process.env.PORT || 3000);
 }
-
-
 
 
 

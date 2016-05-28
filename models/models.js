@@ -6,15 +6,18 @@ var mongoose = require('mongoose'),
 var GroupSchema = new Schema({
     name:  {type: String, unique: true, default: ''},
     link: {type: String, default: ''},
-    course: {type: Number, default: 1},
-    students: [{ type: Schema.ObjectId, ref: 'User' }]
+    searchName: {type: String, default: ''},
+    teacher: {type: Boolean, default: false},
+    student: {type: Boolean, default: true}
 });
 
 //Schema for teacher model
 var TeacherSchema = new Schema({
     name: {type: String, unique: true, default: ''},
     link: {type: String, default: ''},
-    user: {type: Schema.ObjectId, ref: 'User' }
+    searchName: {type: String, default: ''},
+    teacher: {type: Boolean, default: true},
+    student: {type: Boolean, default: false}
 });
 
 
@@ -29,7 +32,8 @@ var LessonSchema = new Schema({
     groupName: {type: String, default: ''},
     groupId: {type: String, default: ''},
     date: {type: Object},
-    time: {type: Object}
+    time: {type: Object},
+    created: {type: Number}
 });
 
 //Exports
