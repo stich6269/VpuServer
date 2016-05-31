@@ -36,7 +36,10 @@ function startServer() {
                         if(err) return sendError('DB error: Teacher table error');
 
                         res.statusCode = 200;
-                        res.end(JSON.stringify(list.concat(teachers)));
+                        setTimeout(function () {
+                            res.end(JSON.stringify(list.concat(teachers)));
+                        }, 2000)
+
                     });
                 });
                 break;
@@ -49,7 +52,9 @@ function startServer() {
                     query[key] = data.id;
                     models.Lesson.find(query, function (err, result) {
                         res.statusCode = 200;
-                        res.end(JSON.stringify(result));
+                        setTimeout(function(){
+                            res.end(JSON.stringify(result));
+                        },1500)
                     });
                 });
                 break;
