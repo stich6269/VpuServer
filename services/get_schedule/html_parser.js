@@ -80,9 +80,7 @@ Parser.prototype.parseLessons = function($, groupName){
 
     $(tr).each(function(rowCounter, item){
         currentRows =  $(item).children();
-
-        console.log('---------', currentRows.length);
-
+        
         if(rowCounter == 0){
             currentRows.each(function(collCounter, col){
                 if(collCounter){

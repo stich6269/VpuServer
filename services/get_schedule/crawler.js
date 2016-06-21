@@ -32,12 +32,12 @@ PageGrabber.prototype.getScheduleLinks = function () {
 };
 
 PageGrabber.prototype.getLessons = function (collection) {
-    var linkArr = _.pluck(collection, 'link')[1],
+    var linkArr = _.pluck(collection, 'link'),
         lessonsArr = [],
         self = this,
         counter = 0;
 
-    console.log(_.pluck(collection, 'link').length)
+    
     var getGroups = new Crawler({
         maxConnections : 1,
         callback : function (error, result, $) {
