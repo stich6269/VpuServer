@@ -31,6 +31,7 @@ var dbLink = process.env.MONGODB_URI || "mongodb://localhost/vpuSchedule",
     //When connected to db
     mongoose.connection.once('connected', function () {
         debug && console.log('DB connected...');
+
         models.Group.find({}, function (err, result) {
             debug && console.log('Start update schedule...');
             pageGrabber.getLessons(result);

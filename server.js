@@ -2,7 +2,6 @@
 var models = require('./models/models');
 var mongoose = require('mongoose');
 var http = require('http');
-var async = require("async");
 var url = require('url');
 
 //Setup and local variables

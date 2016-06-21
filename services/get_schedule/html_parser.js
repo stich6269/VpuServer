@@ -77,8 +77,11 @@ Parser.prototype.parseLessons = function($, groupName){
         tr = table.find('tr'),
         currentRows;
 
+
     $(tr).each(function(rowCounter, item){
         currentRows =  $(item).children();
+
+        console.log('---------', currentRows.length);
 
         if(rowCounter == 0){
             currentRows.each(function(collCounter, col){
@@ -108,7 +111,7 @@ Parser.prototype.parseLessons = function($, groupName){
             }
         }
     });
-
+    
     return resultArr
 };
 
@@ -159,7 +162,6 @@ function transliterate(word){
         return a[char] || char;
     }).join("");
 }
-
 
 
 //Exports
