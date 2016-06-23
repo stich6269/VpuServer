@@ -31,10 +31,7 @@ function startServer() {
                     if(err) return sendError('DB error: Group table error');
                     models.Teacher.find({}, {_id:1, teacher:1, searchName:1, name: 1}, function (err, teachers) {
                         res.statusCode = 200;
-                        setTimeout(function () {
-                            res.end(JSON.stringify(teachers.concat(groups)));
-                        }, 2000)
-
+                        res.end(JSON.stringify(teachers.concat(groups)));
                     });
                 });
                 break;
@@ -47,9 +44,7 @@ function startServer() {
                     query[key] = data.id;
                     models.Lesson.find(query, function (err, result) {
                         res.statusCode = 200;
-                        setTimeout(function(){
-                            res.end(JSON.stringify(result));
-                        },1500)
+                        res.end(JSON.stringify(result));
                     });
                 });
                 break;
