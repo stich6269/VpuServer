@@ -3,6 +3,7 @@ var models = require('./models/models');
 var mongoose = require('mongoose');
 var http = require('http');
 var url = require('url');
+var _ = require('underscore');
 
 //Setup and local variables
 var dbLink = process.env.MONGODB_URI || "mongodb://localhost/vpuSchedule",
@@ -26,17 +27,12 @@ function startServer() {
         
         switch (link){
             case '/get_list':
-                var list = [];
-                models.Group.find({}, function (err, groups) {
+                models.Group.find({}, {_id:1, student:1, searchName:1, name: 1}, function (err, groups) {
                     if(err) return sendError('DB error: Group table error');
-                    list = groups;
-
-                    models.Teacher.find({}, function (err, teachers) {
-                        if(err) return sendError('DB error: Teacher table error');
-
+                    models.Teacher.find({}, {_id:1, teacher:1, searchName:1, name: 1}, function (err, teachers) {
                         res.statusCode = 200;
                         setTimeout(function () {
-                            res.end(JSON.stringify(list.concat(teachers)));
+                            res.end(JSON.stringify(teachers.concat(groups)));
                         }, 2000)
 
                     });

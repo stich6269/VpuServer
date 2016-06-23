@@ -1,0 +1,8 @@
+Mongo Data Base
+    1) For lunch MongoDB on windows use
+        cd C:\mongodb\bin
+        mongod.exe --dbpath .
+
+    2) Than open new console window and lunch
+        cd C:\mongodb\bin
+        mongo.
