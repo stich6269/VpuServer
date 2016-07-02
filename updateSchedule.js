@@ -1,15 +1,3 @@
-//Dependencies
-var pageGrabber = require('./services/get_schedule/crawler');
-var mongoose = require('mongoose');
-var util = require("util");
-var _ = require('underscore');
-var async = require("async");
-var models = require('./models/models');
-
-
-//Setup and local variables
-var dbLink = process.env.MONGODB_URI || "mongodb://localhost/vpuSchedule",
-    debug = true;
 
 //Auto run function
 (function () {

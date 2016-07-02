@@ -15,16 +15,13 @@ function PageGrabber() {
     EventEmitter.call(this);
 }
 
-PageGrabber.prototype.getScheduleLinks = function () {
+PageGrabber.prototype.getScheduleLinks = function (callback) {
     var self =  this,
         getStartPage = new Crawler({
             maxConnections : 1,
-            callback : function (error, result, $) {
-                if(!error){
-                    self.emit("got-links", parser.parseLinks($));
-                }else{
-                    console.log(error)
-                }
+            callback: function (err, result, $) {
+                if (err) return callback(err);
+                callback(null, parser.parseLinks($));
             }
         });
     

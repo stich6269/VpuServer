@@ -9,6 +9,7 @@
     "mongodb": "2.1.18",
     "mongoose": "4.5.1",
     "underscore": "1.8.3",
-    "async": "1.5.2"
+    "async": "1.5.2",
+    "ping": "1.4.1"
   }
 }

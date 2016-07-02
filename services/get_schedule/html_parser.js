@@ -33,7 +33,7 @@ Parser.prototype.parseLinks = function($){
         modelType = '',
         searchName = '',
         currentStr;
-
+    
     if($){
         $('.sub').each(function(i, item){
             currentStr = entities.decode($(item).html());
@@ -43,6 +43,8 @@ Parser.prototype.parseLinks = function($){
    
             if(self.isGroup(currentStr)) modelType = 'Group';
             if(self.isTeacher(currentStr)) modelType = 'Teacher';
+            
+            console.log(currentStr)
             
             if(modelType){
                 results.push(new models[modelType]({
