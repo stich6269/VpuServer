@@ -10,6 +10,6 @@
     "mongoose": "4.5.1",
     "underscore": "1.8.3",
     "async": "1.5.2",
-    "ping": "0.4.1"
+    "ping": "0.1.4"
   }
 }
